@@ -48,7 +48,7 @@
     ipcRenderer.send('app_version')
     ipcRenderer.on('app_version', function(event, arg) {
       ipcRenderer.removeAllListeners('app_version')
-      version.innerText = 'Version ' + arg.version + ' EaDGR'
+      version.innerText = 'Version ' + arg.version + ' EaDGR Sombish'
     })
     ipcRenderer.on('update_available', function() {
       ipcRenderer.removeAllListeners('update_available')
