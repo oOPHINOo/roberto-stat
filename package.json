@@ -1,0 +1,22 @@
+{
+  "name": "roberto-stat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^7.1.1",
+    "electron-builder": "^22.1.0"
+  },
+  "dependencies": {
+    "electron-updater": "^4.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oOPHINOo/roberto-stat.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder build --mac --publish never",
+    "deploy": "electron-builder build --mac --publish always"
+  }
+}
