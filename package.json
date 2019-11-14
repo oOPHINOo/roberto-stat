@@ -8,14 +8,15 @@
     "electron-builder": "^22.1.0"
   },
   "dependencies": {
-    "electron-updater": "^4.2.0"
+    "electron-updater": "^4.2.0",
+    "electron-log": "^3.0.9"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/oOPHINOo/roberto-stat.git"
   },
   "scripts": {
-    "start": "electron .",
+    "start": "electron --inspect=6666 .",
     "build": "electron-builder build --mac --publish never",
     "deploy": "electron-builder build --mac --publish always"
   }

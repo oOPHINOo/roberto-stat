@@ -30,36 +30,39 @@
   <p id="version"></p>
   <div id="notification" class="hidden">
     <p id="message"></p>
-    <button id="close-button" onClick="closeNotification()">
+    <button id="close-button" onclick="closeNotification()">
       Close
     </button>
-    <button id="restart-button" onClick="restartApp()" class="hidden">
+    <button id="restart-button" onclick="restartApp()" class="hidden">
       Restart
     </button>
   </div>
   <script>
     const { ipcRenderer } = require('electron')
+    // element selectors.
     const version = document.getElementById('version')
-    ipcRenderer.send('app_version')
-    ipcRenderer.on('app_version', (event, arg) => {
-      ipcRenderer.removeAllListeners('app_version')
-      version.innerText = 'Version ' + arg.version + ' EaDGR'
-    })
     const notification = document.getElementById('notification')
     const message = document.getElementById('message')
     const restartButton = document.getElementById('restart-button')
-    ipcRenderer.on('update_available', () => {
+    // electron handlers.
+    ipcRenderer.send('app_version')
+    ipcRenderer.on('app_version', function(event, arg) {
+      ipcRenderer.removeAllListeners('app_version')
+      version.innerText = 'Version ' + arg.version + ' EaDGR'
+    })
+    ipcRenderer.on('update_available', function() {
       ipcRenderer.removeAllListeners('update_available')
       message.innerText = 'A new update is available. Downloading now...'
       notification.classList.remove('hidden')
     })
-    ipcRenderer.on('update_downloaded', () => {
+    ipcRenderer.on('update_downloaded', function() {
       ipcRenderer.removeAllListeners('update_downloaded')
       message.innerText =
         'Update Downloaded. It will be installed on restart. Restart now?'
       restartButton.classList.remove('hidden')
       notification.classList.remove('hidden')
     })
+    // handlers.
     function closeNotification() {
       notification.classList.add('hidden')
     }

@@ -1,6 +1,6 @@
-import { autoUpdater } from 'electron-updater'
-import { app, BrowserWindow, ipcMain } from 'electron'
-
+const { autoUpdater } = require('electron-updater')
+const { app, BrowserWindow, ipcMain } = require('electron')
+const log = require('electron-log')
 let mainWindow
 
 function createWindow() {
@@ -19,8 +19,12 @@ function createWindow() {
 
 app.on('ready', () => {
   createWindow()
+  log.transports.file.level = 'debug'
+  autoUpdater.logger = log
   // Lets look for some updates.
-  autoUpdater.checkForUpdatesAndNotify()
+  autoUpdater.checkForUpdatesAndNotify().catch(err => {
+    console.log(err)
+  })
 })
 
 app.on('window-all-closed', function() {
