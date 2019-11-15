@@ -17,7 +17,7 @@ const App: React.FC = () => {
     'app_version',
     (event: any, arg: { version: string }): void => {
       console.log('version', arg.version)
-      setVersion(`Version ${arg.version} EaDGR Sombish`)
+      setVersion(`Version ${arg.version} EaDGR Sombish okay okay`)
       window.electron.ipcRenderer.removeAllListeners('app_version')
     }
   )
