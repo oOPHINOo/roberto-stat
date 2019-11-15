@@ -1,6 +1,6 @@
 {
   "name": "roberto-stat",
-  "version": "2.0.4",
+  "version": "2.0.6",
   "main": "public/electron.js",
   "homepage": "./",
   "repository": {
