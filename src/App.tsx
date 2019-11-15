@@ -54,7 +54,7 @@ const App: React.FC = () => {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Roberto Stat</h1>
+        <h1>Roberto-Stat</h1>
         {version && <p>{version}</p>}
         {notify ? (
           <div className="Notification">

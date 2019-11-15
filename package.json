@@ -1,9 +1,6 @@
 {
   "name": "roberto-stat",
-  "version": "2.0.0",
-  "build": {
-    "appId": "com.roberto.stat"
-  },
+  "version": "2.0.1",
   "main": "public/electron.js",
   "homepage": "./",
   "repository": {
@@ -50,9 +47,8 @@
     "react-build": "react-scripts build",
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
-    "electron-build": "electron-builder",
-    "release": "yarn react-build && electron-builder --mac --publish=always",
-    "build": "yarn react-build && yarn electron-build",
+    "release": "yarn react-build && electron-builder build --mac --publish always",
+    "build": "yarn react-build && yarn electron-builder build --mac --publish never",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
   }
 }
