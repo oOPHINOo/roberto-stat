@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import Electron from 'electron'
 
 const { ipcRenderer } = window.electron
 
@@ -27,12 +28,15 @@ const App: React.FC = () => {
     setNotify(true)
     setNotifyRestart(false)
   })
-  ipcRenderer.on('download_progress', (p: any): void => {
-    setMessage(`Progress ${p}`)
-    console.log(p)
-    setNotify(true)
-    setNotifyRestart(false)
-  })
+  ipcRenderer.on(
+    'download_progress',
+    (event: Electron.IpcRendererEvent, args: any[]): void => {
+      setMessage(`Progressing...`)
+      console.log(args)
+      setNotify(true)
+      setNotifyRestart(false)
+    }
+  )
   ipcRenderer.on('update_downloaded', (): void => {
     ipcRenderer.removeAllListeners('update_downloaded')
     ipcRenderer.removeAllListeners('download_progress')
