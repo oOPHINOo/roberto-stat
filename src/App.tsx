@@ -30,6 +30,7 @@ const App: React.FC = () => {
   ipcRenderer.on('download_progress', (p: any): void => {
     ipcRenderer.removeAllListeners('download_progress')
     setMessage(`Progress ${p}`)
+    console.log(p)
     setNotify(true)
     setNotifyRestart(false)
   })
