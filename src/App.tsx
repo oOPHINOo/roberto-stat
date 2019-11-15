@@ -28,7 +28,6 @@ const App: React.FC = () => {
     setNotifyRestart(false)
   })
   ipcRenderer.on('download_progress', (p: any): void => {
-    ipcRenderer.removeAllListeners('download_progress')
     setMessage(`Progress ${p}`)
     console.log(p)
     setNotify(true)
@@ -36,6 +35,7 @@ const App: React.FC = () => {
   })
   ipcRenderer.on('update_downloaded', (): void => {
     ipcRenderer.removeAllListeners('update_downloaded')
+    ipcRenderer.removeAllListeners('download_progress')
     setMessage(
       'Update Downloaded. It will be installed on restart. Restart now?'
     )
