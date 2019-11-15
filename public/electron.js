@@ -1,17 +1,29 @@
 const { autoUpdater } = require('electron-updater')
 const { app, BrowserWindow, ipcMain } = require('electron')
+const path = require('path')
 const log = require('electron-log')
-let mainWindow
+const isDev = require('electron-is-dev')
 
-function createWindow() {
+let mainWindow = null
+
+const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      preload: path.join(__dirname, '/preload.js'),
     },
   })
-  mainWindow.loadFile('index.html')
+  mainWindow.loadURL(
+    isDev
+      ? 'http://localhost:3000'
+      : `file://${path.join(__dirname, '../build/index.html')}`
+  )
+  if (isDev) {
+    mainWindow.webContents.openDevTools()
+  }
+
   mainWindow.on('closed', function() {
     mainWindow = null
   })
@@ -22,18 +34,20 @@ app.on('ready', () => {
   log.transports.file.level = 'debug'
   autoUpdater.logger = log
   // Lets look for some updates.
-  autoUpdater.checkForUpdatesAndNotify().catch(err => {
+  try {
+    autoUpdater.checkForUpdatesAndNotify()
+  } catch (err) {
     console.log(err)
-  })
+  }
 })
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
-app.on('activate', function() {
+app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
@@ -45,15 +59,17 @@ ipcMain.on('app_version', event => {
 
 // Update handlers.
 autoUpdater.on('update-available', () => {
+  console.log('update-available')
   mainWindow.webContents.send('update_available')
 })
 autoUpdater.on('download-progress', () => {
+  console.log('update-progress')
   mainWindow.webContents.send('download_progress')
 })
 autoUpdater.on('update-downloaded', () => {
+  console.log('update-downloaded')
   mainWindow.webContents.send('update_downloaded')
 })
-
 ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall()
 })

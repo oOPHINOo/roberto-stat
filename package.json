@@ -1,23 +1,58 @@
 {
   "name": "roberto-stat",
-  "version": "1.0.4",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "electron": "^7.1.1",
-    "electron-builder": "^22.1.0"
+  "version": "2.0.0",
+  "build": {
+    "appId": "com.roberto.stat"
   },
-  "dependencies": {
-    "electron-updater": "^4.2.0",
-    "electron-log": "^3.0.9"
-  },
+  "main": "public/electron.js",
+  "homepage": "./",
   "repository": {
     "type": "git",
     "url": "https://github.com/oOPHINOo/roberto-stat.git"
   },
+  "dependencies": {
+    "@types/jest": "24.0.23",
+    "@types/node": "12.12.7",
+    "@types/react": "16.9.11",
+    "@types/react-dom": "16.9.4",
+    "cross-env": "^6.0.3",
+    "electron-is-dev": "^1.1.0",
+    "electron-log": "^3.0.9",
+    "electron-updater": "^4.2.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "3.2.0",
+    "typescript": "3.7.2"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "electron": "^7.1.1",
+    "electron-builder": "^22.1.0",
+    "wait-on": "^3.3.0"
+  },
   "scripts": {
-    "start": "electron --inspect=6666 .",
-    "build": "electron-builder build --mac --publish never",
-    "deploy": "electron-builder build --mac --publish always"
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "react-test": "react-scripts test --env=jsdom",
+    "react-eject": "react-scripts eject",
+    "electron-build": "electron-builder",
+    "release": "yarn react-build && electron-builder --mac --publish=always",
+    "build": "yarn react-build && yarn electron-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
   }
 }
